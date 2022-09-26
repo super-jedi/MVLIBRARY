@@ -17,13 +17,12 @@
             .form-group{
                
                 display : flex ;
-                justify-content :center ;
-                align-items :center ;
+                justify-content : center ;
+                align-items : top ;
                 /* height: 100vh ; */
                 width: 100%;
                 margin: 0px ;
                 /* padding-left: 20%; */
-                padding-top: 100px;
             }
             
         </style>
@@ -40,12 +39,7 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="mymovielist">
-                  <div class="otherbuttons"  id="listbutton" >
-                    <a href="movielist.html">
-                    <button class="custom-btn btn-13"  >Saved Movies List</button></a>
-                  </div>
-                </div>  
+                
                 
 
                 
@@ -64,39 +58,7 @@
             </div>
           </nav>
 
-          <!-- <h3 id="hh"></h3> -->
-
-          
-
-
-         
-           
-        <!-- main search -->
-        <div class="container">
-          <form id="movieForm" autocomplete="off" >
-            <div class="form-group">
-              
-              <input type="text" class="form-control me-2" id="movie" placeholder="Movie name">
-              <button class="btn btn-outline-success" id="searcher">
-                Search
-              </button>
-
-            </div>
-            
-          </form>
-          <div id="result" class="resultarea">
-
-             
-          </div>
-          <div class="otherbuttons" id="addtolistbutton" style="display:none;">
-            <button class="custom-btn btn-13" >Add to list</button>
-          </div>
-        </div>
-        
-        
-
-        
-
+   
 
         <script>
 
@@ -165,131 +127,6 @@
 
     
 
-    <!-- MOVIE Search -->
-    <script>
-      $(document).ready(function(){
-        
-        var apikey="6eb50873"
-        
-        $("#movieForm").submit(function(event){
-          event.preventDefault()
-            
-          var movie = $("#movie").val()
-
-          
-            
-          var url = "https://www.omdbapi.com/?apikey=6eb50873"
-          $.ajax({
-            method:'GET',
-            url:url+"&t="+movie,
-            success:function(data){
-              console.log(data) 
-              showaddtolistbutton()
-
-              result = `
-              
-                <img style="float:left" class=img-thumnail" width="200" height="250" src="${data.Poster}"/>
-                <h3 id="name">${data.Title}</h3> 
-                <h3>${data.Released}</h3> 
-                <h3>${data.Runtime}</h3>
-                <h3>${data.Genre}</h3>
-                <h3>${data.Director}</h3> 
-                <h3>${data.Actors}</h3> 
-              
-              
-              `;
-
-              
-
-              $("#result").html(result);
-
-              
-
-
-              // empty line
-
-            }
-          })
-          
-        })
-        
-      })  
-        
-    </script>
-    <script>
-
-      const submitted= document.getElementById('searcher');
-
-      function showaddtolistbutton() {
-        document.getElementById('addtolistbutton').style.display = "inline";
-      }
-
-
-      // submitted.addEventListener('click', showaddtolistbutton);
-    </script>
-
-
-
-<script type="module">
- 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
- 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAIiFqHJn7pw2iwyBt8hUYtbql8CHCVx5Y",
-    authDomain: "mvlib-13531.firebaseapp.com",
-    databaseURL: "https://mvlib-13531-default-rtdb.firebaseio.com",
-    projectId: "mvlib-13531",
-    storageBucket: "mvlib-13531.appspot.com",
-    messagingSenderId: "24165454045",
-    appId: "1:24165454045:web:75fb4dc167563e49a3cb34",
-    measurementId: "G-7DNKDMBDKP"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
   
-  import{getDatabase, ref, set, child, get}
-  from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js"
-
-  const db=getDatabase();
-
-  //varreferences
-  // const mvname = data.Title;
-
-
-  const mvname =document.getElementById('movie'); 
-  // const submit = document.getElementById('sub_btn'); 
-  // console.log(mvname)   
-
-
-  // FIREBASE REGISTRATION
-  function AddMovie(){
-      const dbRef = ref(db);
-
-      get(child(dbRef, "MVList/"+ mvname.value)).then((snapshot)=>{
-          if(snapshot.exists()){
-              alert("Already Added");
-              }
-          else{
-              set(ref(db,"MVList/"+ mvname.value),
-              {
-                  moviename: mvname.value,
-                  
-              })
-
-              .then(()=>{
-                      alert("Movie Added ");
-              })
-                 
-          }  
-      });                
-  }
-
-  const additem = document.getElementById('addtolistbutton');   
-
-  // EVENT
-  additem.addEventListener('click', AddMovie);
-</script>
-    
 
 </html>
