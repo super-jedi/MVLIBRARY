@@ -39,28 +39,7 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- <ul class="navbar-nav me-0mr-0 mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                  </li>
-                </ul> -->
+                
                 
 
                 
@@ -84,21 +63,15 @@
           
 
 
-        <!-- <div class="otherbuttons">
-            <button class="custom-btn btn-13">My Movie Lists</button>
-            <button class="custom-btn btn-13">Read More</button>
-            <button class="custom-btn btn-13">Read More</button>
-            <button class="custom-btn btn-13">Read More</button>
-
-        </div> -->
-          
+         
+           
         <!-- main search -->
         <div class="container">
           <form id="movieForm" autocomplete="off" >
             <div class="form-group">
               
               <input type="text" class="form-control me-2" id="movie" placeholder="Movie name">
-              <button class="btn btn-outline-success">
+              <button class="btn btn-outline-success" id="searcher">
                 Search
               </button>
 
@@ -107,9 +80,15 @@
               
             </div>
           </form>
-          <div id="result"></div>
-        </div>
+          <div id="result" class="resultarea">
 
+             
+          </div>
+          <div class="otherbuttons" id="addtolistbutton" style="display:none;">
+            <button class="custom-btn btn-13" onclick="showcreatebutton()">Add to list</button>
+          </div>
+        </div>
+        
         
 
         
@@ -179,6 +158,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    
+
     <!-- MOVIE Search -->
     <script>
       $(document).ready(function(){
@@ -198,6 +179,7 @@
             url:url+"&t="+movie,
             success:function(data){
               console.log(data) 
+              showaddtolistbutton()
 
               result = `
               
@@ -208,21 +190,36 @@
                 <h3>${data.Genre}</h3>
                 <h3>${data.Director}</h3> 
                 <h3>${data.Actors}</h3> 
-
+                
               
               `;
 
               $("#result").html(result);
 
-
+              
 
 
 
 
             }
           })
+          
         })
-      })    
+        
+      })  
+        
     </script>
+    <script>
+
+      const submitted= document.getElementById('searcher');
+
+      function showaddtolistbutton() {
+        document.getElementById('addtolistbutton').style.display = "inline";
+      }
+
+
+      // submitted.addEventListener('click', showaddtolistbutton);
+    </script>
+    
 
 </html>

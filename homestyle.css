@@ -3,9 +3,9 @@ body {
   }
 
 .otherbuttons{
-    display : flex ;
+    display : inline ;
                 justify-content : center ;
-                /* align-items : center ; */
+                /* align-items : bottom ; */
                 /* height: 100vh ;
                 width: 100vw ; */
                 margin: 20px ;
@@ -17,7 +17,7 @@ body {
 
   .custom-btn {
     width: 200px;
-    height: 140px;
+    height: 50px;
     color: #fff;
     border-radius: 5px;
     padding: 10px 25px;
