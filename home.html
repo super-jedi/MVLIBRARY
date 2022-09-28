@@ -252,7 +252,7 @@
 
       function showaddtolistbutton() {
         document.getElementById('addtolistbutton').style.display = "inline";
-        document.getElementById('newlistbutton').style.display = "inline";
+        // document.getElementById('newlistbutton').style.display = "inline";
 
       }
 
@@ -301,54 +301,54 @@
         document.getElementById('newlistform').style.display = "none";
       }
 
-    function createnewlist(){
-      const dbRef = ref(db);
+    // function createnewlist(){
+    //   const dbRef = ref(db);
 
 
-      var listname = $("#listname").val()
-      console.log(listname);
-      // console.log(user);
+    //   var listname = $("#listname").val()
+    //   console.log(listname);
+    //   // console.log(user);
 
 
-      get(child(dbRef, listname)).then((snapshot)=>{
-            if(snapshot.exists()){
-                alert("LIST EXISTS");
-                }
-            else{
-              set(ref(db,listname),
-                {
+    //   get(child(dbRef, listname)).then((snapshot)=>{
+    //         if(snapshot.exists()){
+    //             alert("LIST EXISTS");
+    //             }
+    //         else{
+    //           set(ref(db,listname),
+    //             {
                   
-                      moviename: mvdetails.Title,
-                      date: mvdetails.Released,
-                      plot: mvdetails.Plot,
+    //                   moviename: mvdetails.Title,
+    //                   date: mvdetails.Released,
+    //                   plot: mvdetails.Plot,
                       
                   
                     
-                })
+    //             })
 
-                // set(ref(db,"MVList/"+ mvdetails.Title),
-                //   {
-                //       moviename: mvdetails.Title,
-                //       date: mvdetails.Released,
-                //       plot: mvdetails.Plot,
+    //             // set(ref(db,"MVList/"+ mvdetails.Title),
+    //             //   {
+    //             //       moviename: mvdetails.Title,
+    //             //       date: mvdetails.Released,
+    //             //       plot: mvdetails.Plot,
                       
-                //   })
+    //             //   })
                 
                 
 
-                .then(()=>{
-                        alert("List created ");
-                })
+    //             .then(()=>{
+    //                     alert("List created ");
+    //             })
                   
-            }  
-        });   
+    //         }  
+    //     });   
 
-    }
+    // }
 
-    function selectlist(){
+    // function selectlist(){
 
 
-    }
+    // }
 
     // function listselector(){
       
@@ -371,6 +371,7 @@
                     moviename: mvdetails.Title,
                     date: mvdetails.Released,
                     plot: mvdetails.Plot,
+                    poster: mvdetails.Poster,
                     
                 })
 
@@ -388,7 +389,7 @@
 
 
     // EVENT
-    additem.addEventListener('click', selectlist);
+    additem.addEventListener('click', AddMovie);
     newlistcreate.addEventListener('click', shownewlistarea);
     createlistbuton.addEventListener('click', createnewlist);
     createlistbuton.addEventListener('click', hidenewlistarea);
