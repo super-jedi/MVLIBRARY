@@ -44,7 +44,10 @@
                   <div class="otherbuttons"  id="listbutton" >
                     <a href="movielist.html">
                     <button class="custom-btn btn-13"  >Saved Movies List</button></a>
+                    <!-- <button class="custom-btn btn-13"  >Create New list</button> -->
                   </div>
+                  
+
                 </div>  
                 
 
@@ -64,13 +67,8 @@
             </div>
           </nav>
 
-          <!-- <h3 id="hh"></h3> -->
-
-          
 
 
-         
-           
         <!-- main search -->
         <div class="container">
           <form id="movieForm" autocomplete="off" >
@@ -91,14 +89,35 @@
           <div class="otherbuttons" id="addtolistbutton" style="display:none;">
             <button class="custom-btn btn-13" >Add to list</button>
           </div>
+          <div class="otherbuttons" id="newlistbutton" style="display:none;">
+            <button class="custom-btn btn-13" id="newlistbuttonclick">Create a new List</button>
+          </div>
+
+          <div class="newlistarea" id="newlistform" style="display:none;">
+            <input type="text" class="form-control me-2" id="listname" placeholder="Enter List Name">
+            <button class="custom-btn btn-13" id="listnamerclick">Create  list</button>
+          </div>
         </div>
         
+
+
+
+
+        <!-- END OF BODY -->
+
+
+        <!-- SCRIPT AREA -->
+        <!-- SCRIPT AREA -->
+        <!-- SCRIPT AREA -->
+        <!-- SCRIPT AREA -->
         
 
         
 
+        <!-- SIGN IN SIGN OUT -->
+        <script>  
 
-        <script>
+
 
             let userlink = document.getElementById('userlink');
             let signoutlink = document.getElementById('signoutlink');
@@ -166,18 +185,22 @@
     
 
     <!-- MOVIE Search -->
+    
+
     <script>
+      var mvdetails={};
+      
       $(document).ready(function(){
         
         var apikey="6eb50873"
+
+        
         
         $("#movieForm").submit(function(event){
           event.preventDefault()
             
           var movie = $("#movie").val()
 
-          
-            
           var url = "https://www.omdbapi.com/?apikey=6eb50873"
           $.ajax({
             method:'GET',
@@ -198,98 +221,179 @@
               
               
               `;
-
+              mvdetails=data;
               
 
               $("#result").html(result);
 
-              
-
-
-              // empty line
-
+            
             }
           })
           
         })
         
       })  
+
+     
+      
         
     </script>
+
+  
+    
+
+
+
+
+
     <script>
 
       const submitted= document.getElementById('searcher');
 
       function showaddtolistbutton() {
         document.getElementById('addtolistbutton').style.display = "inline";
-      }
+        document.getElementById('newlistbutton').style.display = "inline";
 
+      }
 
       // submitted.addEventListener('click', showaddtolistbutton);
     </script>
 
+    
 
 
-<script type="module">
- 
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
- 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAIiFqHJn7pw2iwyBt8hUYtbql8CHCVx5Y",
-    authDomain: "mvlib-13531.firebaseapp.com",
-    databaseURL: "https://mvlib-13531-default-rtdb.firebaseio.com",
-    projectId: "mvlib-13531",
-    storageBucket: "mvlib-13531.appspot.com",
-    messagingSenderId: "24165454045",
-    appId: "1:24165454045:web:75fb4dc167563e49a3cb34",
-    measurementId: "G-7DNKDMBDKP"
-  };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  <script type="module">
   
-  import{getDatabase, ref, set, child, get}
-  from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js"
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIiFqHJn7pw2iwyBt8hUYtbql8CHCVx5Y",
+      authDomain: "mvlib-13531.firebaseapp.com",
+      databaseURL: "https://mvlib-13531-default-rtdb.firebaseio.com",
+      projectId: "mvlib-13531",
+      storageBucket: "mvlib-13531.appspot.com",
+      messagingSenderId: "24165454045",
+      appId: "1:24165454045:web:75fb4dc167563e49a3cb34",
+      measurementId: "G-7DNKDMBDKP"
+    };
 
-  const db=getDatabase();
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    
+    import{getDatabase, ref, set, child, get}
+    from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js"
 
-  //varreferences
-  // const mvname = data.Title;
+    const db=getDatabase();
 
+    //varreferences
+    // const mvname = data.Title;
 
-  const mvname =document.getElementById('movie'); 
-  // const submit = document.getElementById('sub_btn'); 
-  // console.log(mvname)   
+    // var mvname = mvdetails.Title;
 
+    
+    // const submit = document.getElementById('sub_btn'); 
+    // console.log(mvdetails.Title);
+    function shownewlistarea(){
+        document.getElementById('newlistform').style.display = "inline";
+      }
+      function hidenewlistarea(){
+        document.getElementById('newlistform').style.display = "none";
+      }
 
-  // FIREBASE REGISTRATION
-  function AddMovie(){
+    function createnewlist(){
       const dbRef = ref(db);
 
-      get(child(dbRef, "MVList/"+ mvname.value)).then((snapshot)=>{
-          if(snapshot.exists()){
-              alert("Already Added");
-              }
-          else{
-              set(ref(db,"MVList/"+ mvname.value),
-              {
-                  moviename: mvname.value,
+
+      var listname = $("#listname").val()
+      console.log(listname);
+      // console.log(user);
+
+
+      get(child(dbRef, listname)).then((snapshot)=>{
+            if(snapshot.exists()){
+                alert("LIST EXISTS");
+                }
+            else{
+              set(ref(db,listname),
+                {
                   
-              })
+                      moviename: mvdetails.Title,
+                      date: mvdetails.Released,
+                      plot: mvdetails.Plot,
+                      
+                  
+                    
+                })
 
-              .then(()=>{
-                      alert("Movie Added ");
-              })
-                 
-          }  
-      });                
-  }
+                // set(ref(db,"MVList/"+ mvdetails.Title),
+                //   {
+                //       moviename: mvdetails.Title,
+                //       date: mvdetails.Released,
+                //       plot: mvdetails.Plot,
+                      
+                //   })
+                
+                
 
-  const additem = document.getElementById('addtolistbutton');   
+                .then(()=>{
+                        alert("List created ");
+                })
+                  
+            }  
+        });   
 
-  // EVENT
-  additem.addEventListener('click', AddMovie);
-</script>
+    }
+
+    function selectlist(){
+
+
+    }
+
+    // function listselector(){
+      
+    // }
+
+    // FIREBASE REGISTRATION
+    function AddMovie(){
+      console.log(mvdetails.Title);
+        const dbRef = ref(db);
+
+        
+
+        get(child(dbRef, "MVList/"+ mvdetails.Title)).then((snapshot)=>{
+            if(snapshot.exists()){
+                alert("Already Added");
+                }
+            else{
+                set(ref(db,"MVList/"+ mvdetails.Title),
+                {
+                    moviename: mvdetails.Title,
+                    date: mvdetails.Released,
+                    plot: mvdetails.Plot,
+                    
+                })
+
+                .then(()=>{
+                        alert("Movie Added ");
+                })
+                  
+            }  
+        });                
+    }
+
+    const additem = document.getElementById('addtolistbutton');  
+    const newlistcreate = document.getElementById('newlistbutton');  
+    const createlistbuton = document.getElementById('listnamerclick');  
+
+
+    // EVENT
+    additem.addEventListener('click', selectlist);
+    newlistcreate.addEventListener('click', shownewlistarea);
+    createlistbuton.addEventListener('click', createnewlist);
+    createlistbuton.addEventListener('click', hidenewlistarea);
+
+  </script>
     
 
 </html>
